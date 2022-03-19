@@ -20,7 +20,7 @@ def get_db():
         db.close()
 
 
-@app.get("/")
+@app.get("/v1")
 def welcome():
     return {"msg": "The Blood Glucose Readings API."}
 
