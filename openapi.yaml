@@ -1,0 +1,192 @@
+openapi: 3.0.3
+info:
+  description: A service for managing the blood glucose readings of diabetes patients
+  title: Blood Glucose Readings API
+  version: 1.0.0
+servers:
+  - url: /
+paths:
+  /v1/reading:
+    get:
+      summary: Get all readings
+      description: Get all readings stored in the service.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/ReadingResponse"
+                type: array
+          description: List of blood glucose readings
+    post:
+      summary: Create a new reading
+      description: Create a new reading from the details provided in the JSON request body.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReadingCreateRequest"
+        description: Details of the reading to create
+        required: true
+      responses:
+        "201":
+          description: Reading created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadingResponse"
+        "400":
+          description: Invalid request (e.g. unknown fields)
+  /v1/reading/{reading_uuid}:
+    get:
+      summary: Get a reading by UUID
+      description: Get the reading with the UUID specified in the URL
+      parameters:
+        - name: reading_uuid
+          description: The reading UUID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 1faafa60-c19a-4dd1-b5b0-e1d55f9464d4
+      responses:
+        "200":
+          description: Reading details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadingResponse"
+        "404":
+          description: Reading not found
+    put:
+      summary: Update a reading by UUID
+      description: Update the reading with the UUID specified in the URL, using the details specified in the JSON request body.
+      parameters:
+        - name: reading_uuid
+          description: The reading UUID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 1faafa60-c19a-4dd1-b5b0-e1d55f9464d4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReadingUpdateRequest"
+        description: Details of the reading to create
+        required: true
+      responses:
+        "204":
+          description: Reading updated successfully
+        "400":
+          description: Invalid request (e.g. unknown fields)
+        "404":
+          description: Reading not found
+    delete:
+      summary: Delete a reading by UUID
+      description: Delete the reading with the UUID specified in the URL
+      parameters:
+        - name: reading_uuid
+          description: The reading UUID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 1faafa60-c19a-4dd1-b5b0-e1d55f9464d4
+      responses:
+        "204":
+          description: Reading deleted successfully
+        "404":
+          description: Reading not found
+components:
+  schemas:
+    ReadingCreateRequest:
+      properties:
+        patient_uuid:
+          description: The UUID of the patient who took the reading
+          type: string
+          format: uuid
+          example: 22c685ae-9249-4c84-9b6e-d0e3537be66e
+        value:
+          description: The value of the blood glucose reading
+          type: number
+          example: 5.5
+        unit:
+          description: The unit that the blood glucose reading is recorded in (either mmol/L or mg/dL)
+          type: string
+          enum:
+            - mmol/L
+            - mg/dL
+        recorded_at:
+          description: The timestamp at which the reading was recorded, in ISO8601 format (see https://en.wikipedia.org/wiki/ISO_8601)
+          type: string
+          format: date-time
+          example: "2021-01-01T12:00:00+00:00"
+      required:
+        - patient_uuid
+        - value
+        - unit
+        - recorded_at
+      type: object
+    ReadingResponse:
+      properties:
+        reading_uuid:
+          description: The UUID of the reading
+          type: string
+          format: uuid
+          example: 1faafa60-c19a-4dd1-b5b0-e1d55f9464d4
+        patient_uuid:
+          description: The UUID of the patient who took the reading
+          type: string
+          format: uuid
+          example: 22c685ae-9249-4c84-9b6e-d0e3537be66e
+        value:
+          description: The value of the blood glucose reading
+          type: number
+          example: 5.5
+        unit:
+          description: The unit that the blood glucose reading is recorded in (either mmol/L or mg/dL)
+          type: string
+          enum:
+            - mmol/L
+            - mg/dL
+        recorded_at:
+          description: The timestamp at which the reading was recorded, in ISO8601 format (see https://en.wikipedia.org/wiki/ISO_8601)
+          type: string
+          format: date-time
+          example: "2021-01-01T12:00:00+00:00"
+      required:
+        - reading_uuid
+        - patient_uuid
+        - value
+        - unit
+        - recorded_at
+      type: object
+    ReadingUpdateRequest:
+      properties:
+        patient_uuid:
+          description: The UUID of the patient who took the reading
+          type: string
+          format: uuid
+          example: 22c685ae-9249-4c84-9b6e-d0e3537be66e
+        value:
+          description: The value of the blood glucose reading
+          type: number
+          example: 5.5
+        unit:
+          description: The unit that the blood glucose reading is recorded in (either mmol/L or mg/dL)
+          type: string
+          enum:
+            - mmol/L
+            - mg/dL
+        recorded_at:
+          description: The timestamp at which the reading was recorded, in ISO8601 format (see https://en.wikipedia.org/wiki/ISO_8601)
+          type: string
+          format: date-time
+          example: "2021-01-01T12:00:00+00:00"
+      type: object
