@@ -7,7 +7,7 @@ from sqlalchemy import (
     Float,
 )
 from src.config import Base
-from sqlalchemy.orm import relationship, Session
+from sqlalchemy.orm import Session
 from src.schemas import ReadingCreate
 import logging
 from sqlalchemy.dialects.postgresql import UUID
@@ -45,3 +45,11 @@ def create_reading(db:Session, data:ReadingCreate):
     db.refresh(db_reading)
     logger.info(f"Successfully created reading for patient: {db_reading.patient_uuid}.")
     return db_reading
+
+
+def all_readings(db: Session):
+    return db.query(Readings).all()
+
+
+def get_reading(db: Session, reading_id: UUID):
+    return db.query(Readings).filter(Readings.reading_uuid == reading_id).first()
