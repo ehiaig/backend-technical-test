@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List, Optional
 from src.utils import UNITS
 from pydantic import BaseModel
 from uuid import UUID
@@ -20,3 +19,6 @@ class Reading(ReadingBase):
 
     class Config:
         orm_mode = True
+
+class ReadingUpdate(ReadingBase):
+    pass
