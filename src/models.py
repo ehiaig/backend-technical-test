@@ -21,7 +21,7 @@ class Readings(Base):
     __tablename__ = "readings"
 
     id = Column(BigInteger, primary_key=True, index=True)
-    reading_uuid = Column(UUID(as_uuid=True), default=uuid.uuid4(), index=True, nullable=False)
+    reading_uuid = Column(UUID(as_uuid=True), default=lambda: uuid.uuid4().hex, index=True, nullable=False, unique=True)
     patient_uuid = Column(UUID(as_uuid=True), nullable=False)
     value = Column(Float, nullable=False)
     unit = Column(
@@ -51,5 +51,5 @@ def all_readings(db: Session):
     return db.query(Readings).all()
 
 
-def get_reading(db: Session, reading_id: UUID):
+def get_reading(db: Session, reading_id: uuid.UUID):
     return db.query(Readings).filter(Readings.reading_uuid == reading_id).first()
