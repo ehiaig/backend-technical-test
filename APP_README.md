@@ -1,5 +1,23 @@
-## Setup a Postgress Database
+## Running the APP
 From the `backend-technical-test` repo:
+### Without Docker
+- Generate a `.env` file using the command below:
+    ```
+    cp .env.example .env
+    ```
+- Create the `reading_db` database by running the command below:
+    ```
+    python3 scripts/create_db.py --dbname reading_db --dbuser obama --dbpassword password --dbhost localhost --dbport 5432
+    ```
+    Replace `obama` and `password` with the right user and password.
+- Run `pip3 install -r requirements.txt`
+- Run the app:
+    ```
+    uvicorn src.main:app --reload
+    ```
+
+### With Docker
+#### Setup a Postgress Database in Docker
 - Start Postgres database with the command below:
     ```
     docker run --name readingdbcontainer -p 5432:5432 -e POSTGRES_PASSWORD=password -d postgres
@@ -9,7 +27,7 @@ From the `backend-technical-test` repo:
     python3 scripts/create_db.py --dbname reading_db --dbuser obama --dbpassword password --dbhost localhost --dbport 5432
     ```
 
-## Build and run the app in Docker
+#### Build and run the app in Docker
 - Build the Docker image:
     ```
     docker build -t backendapp . -f Dockerfile
