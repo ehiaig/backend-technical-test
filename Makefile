@@ -1,21 +1,23 @@
 PYTHON = python3
-DBUSER = obama
-DBPASSWORD = password
 
-all: two
+MAIN_DB_NAME = ${DB_NAME}
+MAIN_DB_USER = ${DB_USER}
+MAIN_DB_PASSWORD = ${DB_PASSWORD}
+MAIN_DB_SERVER = ${DB_SERVER}
+TEST_DB_NAME = ${TEST_DB_NAME}
+TEST_DB_USER = ${TEST_DB_USER}
+TEST_DB_PASSWORD = ${TEST_DB_PASSWORD}
+TEST_DB_SERVER = ${TEST_DB_SERVER}
 
-create_db:
-	python3 scripts/create_db.py --dbname reading_db --dbuser ${DBUSER} --dbpassword ${DBPASSWORD} --dbhost localhost --dbport 5432
+db:
+	python3 scripts/create_db.py --dbname ${MAIN_DB_NAME} --dbuser ${MAIN_DB_USER} --dbpassword ${MAIN_DB_PASSWORD} --dbhost ${MAIN_DB_SERVER} --dbport 5432
+	python3 scripts/create_db.py --dbname ${TEST_DB_NAME} --dbuser ${TEST_DB_USER} --dbpassword ${TEST_DB_PASSWORD} --dbhost ${TEST_DB_SERVER} --dbport 5432
 
-tests:
-	pytest tests/test_main.py
-	# ${PYTHON} -m pytest
+test:
+	${PYTHON} -m pytest
 
 install:
 	poetry install
 
 run:
 	uvicorn src.main:app --reload
-
-clean:
-	rm -r *.project
