@@ -16,11 +16,10 @@
     export TEST_DB_PASSWORD=password 
     export TEST_DB_SERVER=localhost
     ```
-- Install the app dependencies: `make install`
-Make sure poetry is installed on your machine.
-- Create the specified `reading_db` and `reading_db_test` databases: `make db`
-- Run the app: `make run`
-- Run the tests: `make test`
+- Install Poetry on your computer from here https://python-poetry.org/docs/. Then install the app dependencies using: `make install`
+- Create the specified `reading_db` and `reading_db_test` databases using: `make db`
+- Run the app using: `make run`
+- Run the tests using: `make test`
 
 
 ### Using Docker
