@@ -1,5 +1,5 @@
 ## RUNNING THE APP
-### Using the Makefile:
+Initial setup:
 - Generate a `.env` file using the command below:
     ```
     cp .env.example .env
@@ -10,12 +10,17 @@
     export DB_NAME=reading_db
     export DB_USER=ehi
     export DB_PASSWORD=password 
-    export DB_SERVER=localhost 
+    export DB_HOST=localhost 
     export TEST_DB_NAME=reading_db_test 
     export TEST_DB_USER=ehi 
     export TEST_DB_PASSWORD=password 
-    export TEST_DB_SERVER=localhost
+    export TEST_DB_HOST=localhost
     ```
+- Options to run:
+    - via [makefile](#using-the-Makefile)
+    - via [docker](#using-docker)
+    - via [docker-compose](#using-docker-compose)
+### Using the Makefile:
 - Install Poetry on your computer from here https://python-poetry.org/docs/. Then install the app dependencies using: `make install`
 - Create the specified `reading_db` and `reading_db_test` databases using: `make db`
 - Run the app using: `make run`
@@ -41,5 +46,22 @@
 
 - Run the image you just built as a container, parsing in the necessary environment variables that the app needs as specified in the `.env` file.
     ```
-    docker run -d --name backendappcontainer -p 8000:8000 -e DB_NAME=reading_db -e DB_USER=ehi -e DB_PASSWORD=password -e DB_SERVER=host.docker.internal  backendapp
+    docker run -d --name backendappcontainer -p 8000:8000 -e DB_NAME=reading_db -e DB_USER=ehi -e DB_PASSWORD=password -e DB_HOST=host.docker.internal  backendapp
     ```
+
+
+### Using Docker Compose
+    - Run the images: `docker-compose up -d`
+    - Confirm the containers are running: `docker ps`
+    - Visit the app in your browser `localhost:8000/docs
+
+    Notes: 
+    - If you try to load app in the browser and it fails;
+        - Get the api container id: `docker ps`
+        - Check it's logs: `docker logs -f 72a2a610baf3`
+    - If the errors like `... TCP/IP connections on port 5432?` it may be that  another postgresql running over your localhost causing this one to fail.
+        - destroy the built container: `docker-compose down`
+        - Run `docker rmi -f $(docker images -a -q)` to clear cached postgres data
+        - The rebuild the image `docker-compose up -d`
+        - isit the app in your browser `localhost:8000/docs
+

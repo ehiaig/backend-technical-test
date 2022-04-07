@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  reading_api:
+    build: .
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./src:/code/src
+    ports:
+      - 8000:8000
+    environment:
+      - DB_HOST=reading_api_db
+      - DB_NAME=reading_db
+      - DB_USER=ehiaig
+      - DB_PASSWORD=password
+    depends_on:
+      - reading_api_db
+    restart: on-failure
+    networks:
+      - api-tier
+      
+  reading_api_db:
+    image: postgres:13-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=ehiaig
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=reading_db
+    networks:
+      - api-tier
+    restart: always
+
+volumes:
+  db_data:
+
+networks:
+  api-tier:

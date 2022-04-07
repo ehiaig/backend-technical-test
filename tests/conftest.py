@@ -12,12 +12,12 @@ load_dotenv()
 DB_NAME = os.environ.get("TEST_DB_NAME")
 DB_USER = os.environ.get("TEST_DB_USER")
 DB_PASSWORD = os.environ.get("TEST_DB_PASSWORD")
-DB_SERVER = os.environ.get("TEST_DB_SERVER")
+DB_HOST = os.environ.get("TEST_DB_HOST")
 from src.config import Base
 from src.main import app, get_db
 
 SQLALCHEMY_DATABASE_URL = "postgresql://{}:{}@{}/{}".format(
-    DB_USER, DB_PASSWORD, DB_SERVER, DB_NAME
+    DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
 )
 
 
