@@ -10,9 +10,9 @@ services:
       - 8000:8000
     environment:
       - DB_HOST=reading_api_db
-      - DB_NAME=reading_db
-      - DB_USER=ehiaig
-      - DB_PASSWORD=password
+      - DB_NAME="${DB_NAME}"
+      - DB_USER="${DB_USER}"
+      - DB_PASSWORD="${DB_PASSWORD}
     depends_on:
       - reading_api_db
     restart: on-failure
@@ -24,9 +24,9 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=ehiaig
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=reading_db
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     networks:
       - api-tier
     restart: always
