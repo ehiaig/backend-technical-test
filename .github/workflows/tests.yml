@@ -16,43 +16,27 @@ env:
   POETRY_VERSION: 3.8
   
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Build API base image
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: ${{ env.PYTHON_VERSION}}
-  #     - name: Install Dependencies
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install -r ./python/requirements.txt
-  #     - name: Build & Push Image
-  #       run: |
-  #         cd ./src
-  #         echo "${{ secrets.DOCKERPW }}" | docker login -u "[your dockerhub login here]" --password-stdin
-  #         docker image build -t [your dockerhub username here]/backend-technical-api:v1.0 .
-  #         docker push [your docker hub username here]/backend-technical-api:v1.0
-
-
   build:
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     python-version: [3.9]
-
     steps:
       - uses: actions/checkout@v2
       - name: Build API base image
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION}}
+      - name: Install Dependencies
         run: |
-            docker build \
-              --build-arg PYTHON_VERSION=${{ env.PYTHON_VERSION}} \
-              --build-arg POETRY_VERSION=${{ env.POETRY_VERSION}} \
-              -t backend-technical-api .
+          python -m pip install --upgrade pip
+          pip install -r ./python/requirements.txt
+      - name: Build & Push Image
+        run: |
+          cd ./src
+          echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u ehiaig --password-stdin
+          docker image build -t ehiaig/backend-technical-api:v1.0 .
+          docker push [your docker hub username here]/backend-technical-api:v1.0
       - name: Start services for API
         run: docker-compose up -d
-      - name: Run unit tests
+       - name: Run unit tests
         if: ${{github.ref != 'refs/heads/master'}}
         run: bash docker_scripts/run_unit_tests.sh
       - name: Run tests with coverage
@@ -64,6 +48,30 @@ jobs:
       - name: Deploy coverage report
         if: ${{github.ref != 'refs/heads/master'}}
         run: bash docker_scripts/run_test_coverage.sh
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Build API base image
+  #       run: |
+  #           docker build \
+  #             --build-arg PYTHON_VERSION=${{ env.PYTHON_VERSION}} \
+  #             --build-arg POETRY_VERSION=${{ env.POETRY_VERSION}} \
+  #             -t backend-technical-api .
+  #     - name: Start services for API
+  #       run: docker-compose up -d
+  #     - name: Run unit tests
+  #       if: ${{github.ref != 'refs/heads/master'}}
+  #       run: bash docker_scripts/run_unit_tests.sh
+  #     - name: Run tests with coverage
+  #       if: ${{github.ref != 'refs/heads/master'}}
+  #       uses: JamesIves/github-pages-deploy-action@4.1.2
+  #       with:
+  #         branch: gh-pages
+  #         folder: docs
+  #     - name: Deploy coverage report
+  #       if: ${{github.ref != 'refs/heads/master'}}
+  #       run: bash docker_scripts/run_test_coverage.sh
 
 
 

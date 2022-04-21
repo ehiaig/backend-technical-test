@@ -22,7 +22,3 @@ Your task is to create a RESTful API to implement CRUD operations on this data. 
 - DELETE /v1/reading/{reading_id} - Delete a reading by ID
 
 The endpoints are described in more detail in the OpenAPI specification in `openapi.yaml`. You can copy-paste the specification into https://editor.swagger.io/ to view a user-friendly summary.
-
-### Testing
-
-A suite of Postman tests has been provided with this task in `postman-tests.json`. This file can run using the Postman desktop app, or using the `newman` CLI tool.
