@@ -33,7 +33,7 @@ jobs:
         cd ./src
         echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u ehiaig --password-stdin
         docker image build -t ehiaig/backend-technical-api:v1.0 .
-        docker push [your docker hub username here]/backend-technical-api:v1.0
+        docker push ehiaig/backend-technical-api:v1.0
     - name: Start services for API
       run: docker-compose up -d
       - name: Run unit tests
