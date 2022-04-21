@@ -19,35 +19,35 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build API base image
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ env.PYTHON_VERSION}}
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r ./python/requirements.txt
-      - name: Build & Push Image
-        run: |
-          cd ./src
-          echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u ehiaig --password-stdin
-          docker image build -t ehiaig/backend-technical-api:v1.0 .
-          docker push [your docker hub username here]/backend-technical-api:v1.0
-      - name: Start services for API
-        run: docker-compose up -d
-       - name: Run unit tests
-        if: ${{github.ref != 'refs/heads/master'}}
-        run: bash docker_scripts/run_unit_tests.sh
-      - name: Run tests with coverage
-        if: ${{github.ref != 'refs/heads/master'}}
-        uses: JamesIves/github-pages-deploy-action@4.1.2
-        with:
-          branch: gh-pages
-          folder: docs
-      - name: Deploy coverage report
-        if: ${{github.ref != 'refs/heads/master'}}
-        run: bash docker_scripts/run_test_coverage.sh
+    - uses: actions/checkout@v2
+    - name: Build API base image
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ env.PYTHON_VERSION}}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./python/requirements.txt
+    - name: Build & Push Image
+      run: |
+        cd ./src
+        echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u ehiaig --password-stdin
+        docker image build -t ehiaig/backend-technical-api:v1.0 .
+        docker push [your docker hub username here]/backend-technical-api:v1.0
+    - name: Start services for API
+      run: docker-compose up -d
+      - name: Run unit tests
+      if: ${{github.ref != 'refs/heads/master'}}
+      run: bash docker_scripts/run_unit_tests.sh
+    - name: Run tests with coverage
+      if: ${{github.ref != 'refs/heads/master'}}
+      uses: JamesIves/github-pages-deploy-action@4.1.2
+      with:
+        branch: gh-pages
+        folder: docs
+    - name: Deploy coverage report
+      if: ${{github.ref != 'refs/heads/master'}}
+      run: bash docker_scripts/run_test_coverage.sh
   # build:
   #   runs-on: ubuntu-latest
   #   steps:
