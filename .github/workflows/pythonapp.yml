@@ -1,4 +1,4 @@
-name: Backedn API
+name: Backend API
 
 on:
   push:
