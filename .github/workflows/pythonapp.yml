@@ -27,12 +27,10 @@ jobs:
         pip install -r ./requirements.txt
 
     - name: Build & Push Docker Image
-      DOCKER_REPOSITORY: backend-technical-api
-      IMAGE_TAG: v1.0
       run: |
         echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u ehiaig --password-stdin
-        docker build -t ehiaig/$DOCKER_REPOSITORY:$IMAGE_TAG .
-        docker push ehiaig/$DOCKER_REPOSITORY:$IMAGE_TAG
+        docker build -t ehiaig/backend-technical-api:v1.0 .
+        docker push ehiaig/backend-technical-api:v1.0
 
     - name: Start API service 
       run: docker-compose up -d
