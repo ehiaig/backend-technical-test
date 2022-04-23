@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,11 +15,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r ./requirements.txt
-#     - name: Build & Push Image
-#       run: |
-#         docker login --username ehiaig --password make2018$
-#         docker build -t ehiaig/backend-technical-test:v1.0 .
-#         docker push ehiaig/backend-technical-test:v1.0
+    - name: Build & Push Image
+      run: |
+        docker login --username ehiaig --password make2018$
+        docker build -t ehiaig/backend-technical-test:v1.1 .
+        docker push ehiaig/backend-technical-test:v1.1
 
 
 # name: Backend API
