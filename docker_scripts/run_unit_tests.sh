@@ -1,4 +1,4 @@
 docker run \
     --network=backend \
-    backend-technical-test \
+    backend-technical-api \
     pytests --containerized tests
