@@ -55,7 +55,7 @@ jobs:
         python ./scripts/create_db.py --dbname ${{ env.TEST_DB_NAME }} --dbuser ${{ env.DB_USER }} --dbpassword ${{ env.DB_PASSWORD }} --dbhost ${{ env.DB_HOST }} --dbport 5432
     - name: Build & Push Image
       env:
-        DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_USER: echo "${{ secrets.DOCKER_USERNAME }}"
         DOCKER_REPO: backend-technical-api
         DOCKER_TAG: v1.0
       run: |
