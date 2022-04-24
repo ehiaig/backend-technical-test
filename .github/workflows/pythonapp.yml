@@ -57,8 +57,8 @@ jobs:
         TEST_DB_PASSWORD: password
         TEST_DB_HOST: localhost
       run: |
-        python scripts/create_db.py --dbname $DB_NAME --dbuser $DB_USER --dbpassword $DB_PASSWORD --dbhost $DB_HOST --dbport 5432
-	      python scripts/create_db.py --dbname $TEST_DB_NAME --dbuser $TEST_DB_USER --dbpassword $TEST_DB_PASSWORD --dbhost $TEST_DB_HOST --dbport 5432
+        python ./scripts/create_db.py --dbname $DB_NAME --dbuser $DB_USER --dbpassword $DB_PASSWORD --dbhost $DB_HOST --dbport 5432
+	      python ./scripts/create_db.py --dbname $TEST_DB_NAME --dbuser $TEST_DB_USER --dbpassword $TEST_DB_PASSWORD --dbhost $TEST_DB_HOST --dbport 5432
     - name: Run unit tests
       env:
         POSTGRES_HOST: postgres
