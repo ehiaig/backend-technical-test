@@ -42,7 +42,6 @@ jobs:
     - name: Build & Push Image
       run: |
         echo "${{ secrets.DOCKERPASSWORD }}" | docker login --username ehiaig --password-stdin
-        docker login --username ehiaig --password make2018$
         docker build -t ehiaig/backend-technical-api:v1.0 .
         docker push ehiaig/backend-technical-api:v1.0
     - name: Start API service 
