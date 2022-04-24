@@ -40,6 +40,25 @@ jobs:
         docker push ehiaig/backend-technical-api:v1.0
     - name: Start API service 
       run: docker-compose up -d
+    - name: Connect to PostgreSQL
+      # Runs a script that creates a PostgreSQL table, populates
+      # the table with data, and then retrieves the data.
+      # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+      env:
+        # The hostname used to communicate with the PostgreSQL service container
+        POSTGRES_HOST: postgres
+        POSTGRES_PORT: 5432
+        DB_NAME: reading_api_db
+        DB_USER: ehiaig
+        DB_PASSWORD: password
+        DB_HOST: localhost
+        TEST_DB_NAME: reading_test_db
+        TEST_DB_USER: ehiaig
+        TEST_DB_PASSWORD: password
+        TEST_DB_HOST: localhost
+      run: |
+        python scripts/create_db.py --dbname $DB_NAME --dbuser $DB_USER --dbpassword $DB_PASSWORD --dbhost $DB_HOST --dbport 5432
+	      python scripts/create_db.py --dbname $TEST_DB_NAME --dbuser $TEST_DB_USER --dbpassword $TEST_DB_PASSWORD --dbhost $TEST_DB_HOST --dbport 5432
     - name: Run unit tests
       env:
         POSTGRES_HOST: postgres
