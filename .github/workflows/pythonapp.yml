@@ -37,7 +37,7 @@ jobs:
         POSTGRES_HOST: postgres
         POSTGRES_PORT: 5432
       run: |
-        python ./scripts/create_db.py --dbname test --dbuser postgres --dbpassword postgres --dbhost postgres --dbport 5432
+        python ./scripts/create_db.py --dbname test --dbuser postgres --dbpassword postgres --dbhost localhost --dbport 5432
     - name: Build & Push Image
       run: |
         echo "${{ secrets.DOCKERPASSWORD }}" | docker login --username ehiaig --password-stdin
