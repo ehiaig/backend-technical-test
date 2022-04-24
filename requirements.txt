@@ -19,3 +19,4 @@ uvloop==0.16.0
 watchgod==0.8
 websockets==10.2
 pytest==6.2.5
+SQLAlchemy-Utils==0.38.2
