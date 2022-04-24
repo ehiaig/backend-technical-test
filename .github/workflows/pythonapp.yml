@@ -6,14 +6,14 @@ on:
       - main
 
 env:
-  TEST_DB_NAME: test
-  TEST_DB_USER: postgres
-  TEST_DB_PASSWORD: postgres
-  TEST_DB_HOST: localhost
-  DB_NAME: reading_api_db
-  DB_USER: postgres
-  DB_PASSWORD: postgres
-  DB_HOST: localhost
+  TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
+  TEST_DB_USER: ${{ secrets.DB_USER }}
+  TEST_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  TEST_DB_HOST: ${{ secrets.DB_HOST }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_HOST: ${{ secrets.DB_HOST }}
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: postgres
@@ -48,16 +48,20 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Connect to PostgreSQL
       env:
-        POSTGRES_HOST: $POSTGRES_HOST
+        POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
         POSTGRES_PORT: 5432
       run: |
-        python ./scripts/create_db.py --dbname $DB_NAME --dbuser $DB_USER --dbpassword $DB_PASSWORD --dbhost $DB_HOST --dbport 5432
-        python ./scripts/create_db.py --dbname $TEST_DB_USER --dbuser $DB_USER --dbpassword $DB_PASSWORD --dbhost $DB_HOST --dbport 5432
+        python ./scripts/create_db.py --dbname ${{ env.DB_NAME }} --dbuser ${{ env.DB_USER }} --dbpassword ${{ env.DB_PASSWORD }} --dbhost ${{ env.DB_HOST }} --dbport 5432
+        python ./scripts/create_db.py --dbname ${{ env.TEST_DB_NAME }} --dbuser ${{ env.DB_USER }} --dbpassword ${{ env.DB_PASSWORD }} --dbhost ${{ env.DB_HOST }} --dbport 5432
     - name: Build & Push Image
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_REPO: backend-technical-api
+        DOCKER_TAG: v1.0
       run: |
-        echo "${{ secrets.DOCKERPASSWORD }}" | docker login --username ehiaig --password-stdin
-        docker build -t ehiaig/backend-technical-api:v1.0 .
-        docker push ehiaig/backend-technical-api:v1.0
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username $DOCKER_USER --password-stdin
+        docker build -t $DOCKER_USER/$DOCKER_REPO:$DOCKER_TAG .
+        docker push $DOCKER_USER/$DOCKER_REPO:$DOCKER_TAG
     - name: Start API service 
       run: docker-compose up -d
     - name: Run unit tests
