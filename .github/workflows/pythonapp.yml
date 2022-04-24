@@ -31,11 +31,11 @@ jobs:
     - name: Start API service 
       run: docker-compose up -d
     - name: Run unit tests
-      env:
-        TEST_DB_NAME:reading_db_test
-        TEST_DB_USER:ehiaig
-        TEST_DB_PASSWORD:password
-        TEST_DB_HOST:localhost
+      # env:
+      #   TEST_DB_NAME:reading_db_test
+      #   TEST_DB_USER:ehiaig
+      #   TEST_DB_PASSWORD:password
+      #   TEST_DB_HOST:localhost
       run: pytest -vv
         # pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
       
