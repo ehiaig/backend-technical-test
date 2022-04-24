@@ -41,7 +41,7 @@ jobs:
         python ./scripts/create_db.py --dbname reading_db_test --dbuser postgres --dbpassword postgres --dbhost localhost --dbport 5432
     - name: Build & Push Image
       run: |
-        docker login --username ehiaig --password ${{ secrets.DOCKER_PASSWORD }}
+        echo "${{ secrets.DOCKERPASSWORD }}" | docker login --username ehiaig --password-stdin
         docker build -t ehiaig/backend-technical-api:v1.0 .
         docker push ehiaig/backend-technical-api:v1.0
     - name: Start API service 
