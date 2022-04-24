@@ -1,6 +1,10 @@
 ## Backend Engineer - Technical Test
 
 **Updates: Check the APP_README.md for how to run my solution.
+![example branch parameter](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?branch=main)
+![Build](https://github.com/ehiaig/backend-technical-test/actions/workflows/<WORKFLOW_FILE>/badge.svg)
+
+
 ### Introduction
 
 Your goal in this task is to implement a simple back-end service for managing the blood glucose readings of diabetes patients. The service associates readings with patients using UUIDs - there is no personally-identifiable information (PII) stored in the service.
