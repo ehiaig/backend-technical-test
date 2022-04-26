@@ -1,7 +1,8 @@
 ## Backend Engineer - Technical Test
 
 **Updates: Check the APP_README.md for how to run my solution.
-![example branch parameter](https://github.com/github/docs/actions/workflows/backend.yml/badge.svg?branch=main)
+![example workflow](https://github.com/ehiaig/backend-technical-test/actions/workflows/backend.yml/badge.svg)
+
 
 
 
