@@ -1,4 +1,4 @@
-Intro: This is a simple back-end service for managing the blood glucose readings of diabetes patients. Read more about it ![here][https://github.com/ehiaig/backend-technical-test/TASK.md].  
+Intro: This is a simple back-end service for managing the blood glucose readings of diabetes patients. Read more about it [here](https://github.com/ehiaig/backend-technical-test/TASK.md).  
 ## RUNNING THE APP
 Initial setup:
 - Generate a `.env` file using the command below:
@@ -52,17 +52,17 @@ Initial setup:
 
 
 ### Using Docker Compose
-    - Run the images: `docker-compose up -d`
-    - Confirm the containers are running: `docker ps`
-    - Visit the app in your browser `localhost:8000/docs
+- Run the images: `docker-compose up -d`
+- Confirm the containers are running: `docker ps`
+- Visit the app in your browser `localhost:8000/docs
 
-    Notes: 
-    - If you try to load app in the browser and it fails;
-        - Get the api container id: `docker ps`
-        - Check it's logs: `docker logs -f 72a2a610baf3`
-    - If the errors like `... TCP/IP connections on port 5432?` it may be that  another postgresql running over your localhost causing this one to fail.
-        - destroy the built container: `docker-compose down`
-        - Run `docker rmi -f $(docker images -a -q)` to clear cached postgres data
-        - The rebuild the image `docker-compose up -d`
-        - isit the app in your browser `localhost:8000/docs
+Notes: 
+- If you try to load app in the browser and it fails;
+    - Get the api container id: `docker ps`
+    - Check it's logs: `docker logs -f 72a2a610baf3`. Replace `72a2a610baf3` with the container id the above step.
+- If the errors like `... TCP/IP connections on port 5432?` it may be that  another postgresql running over your localhost causing this one to fail.
+    - destroy the built container: `docker-compose down`
+    - Run `docker rmi -f $(docker images -a -q)` to clear cached postgres data
+    - The rebuild the image `docker-compose up -d`
+    - visit the app in your browser `localhost:8000/docs
 
