@@ -65,3 +65,34 @@ Initial setup:
         - The rebuild the image `docker-compose up -d`
         - isit the app in your browser `localhost:8000/docs
 
+
+### Using Kubernetes
+- Build the Docker image:
+    ```
+    docker build -t backend-api . -f Dockerfile
+    ```
+- Create and apply the secrets. This will create both secret and config map to be used to connect to our db:
+    `kubectl apply -f k8s/secrets.yml`
+- Create postgres volume for our db:
+    `kubectl apply -f k8s/postgres-volume.yml`
+- Create and apply our postgres db:
+    `kubectl apply -f k8s/postgres-deployment.yml`
+- Then actually create the DB:
+    Using:
+    `kubectl exec -it postgres-7585d764d4-xzz4t -- psql -U postgres`
+    OR
+    Export the password:
+    `export POSTGRES_PASSWORD=$(kubectl get secret postgres-secret-config -o jsonpath="{.data.password}" | base64 --decode)`
+    and the create the db:
+    `kubectl run postgres-client --rm --tty -i --restart=Never --image=postgres:13-alpine --env="PGPASSWORD=$POSTGRES_PASSWORD" --command -- psql -h postgres -U postgres`
+
+    `kubectl run -it --rm --image=postgres:13-alpine postgres-client --restart=Never --command -- psql -h postgres -U postgres`
+- Create and deploy backend-api
+    `kubectl apply -f k8s/backendapi-deployment.yml`
+
+Note: If you face any error, you can always debug;
+    - See the state of the pod `kubectl get pods`
+    - Get if a depoyment is throwing an error;
+        Try to get the logs: `kubectl logs deployment/backendapi-deployment`
+    - Or if you get an error about imageNeverPull, simply run `eval $(minikube docker-env)` and rebuild the docker image then.
+    This command returns a set of Bash environment variable exports to configure your local environment to re-use the Docker daemon inside the Minikube instance.
