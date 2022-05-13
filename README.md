@@ -1,4 +1,4 @@
-Intro: This is a simple back-end service for managing the blood glucose readings of diabetes patients. Read more about it [here][https://github.com/ehiaig/backend-technical-test/TASK.md].  
+Intro: This is a simple back-end service for managing the blood glucose readings of diabetes patients. Read more about it ![here][https://github.com/ehiaig/backend-technical-test/TASK.md].  
 ## RUNNING THE APP
 Initial setup:
 - Generate a `.env` file using the command below:
