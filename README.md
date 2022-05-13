@@ -24,7 +24,7 @@ Initial setup:
 ### Using the Makefile:
 - Install Poetry on your computer from here https://python-poetry.org/docs/. Then install the app dependencies using: `make install`
 - Create the specified `reading_db` and `reading_db_test` databases using: `make db`
-- Run the app using: `make run`
+- Run the app using: `make run` and visit `localhost:8000/docs` in your browser
 - Run the tests using: `make test`
 
 
@@ -64,5 +64,5 @@ Notes:
     - destroy the built container: `docker-compose down`
     - Run `docker rmi -f $(docker images -a -q)` to clear cached postgres data
     - The rebuild the image `docker-compose up -d`
-    - visit the app in your browser `localhost:8000/docs
+    - visit the app in your browser `localhost:8000/docs`
 
