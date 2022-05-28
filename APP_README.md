@@ -67,10 +67,11 @@ Initial setup:
 
 
 ### Using Kubernetes
-- Build the Docker image:
-    ```
-    docker build -t backend-api . -f Dockerfile
-    ```
+If the APP image doesn't exists already then build it;
+    - Build the Docker image: `docker build -t backend-api . -f Dockerfile`
+    - Run it: `docker run -d --name backend-api-container -p 8001:8001 backend-api`
+    - Tag it: `docker tag backend-api ehiaig/backend-api`
+    - Then push to your remote repo: `docker push ehiaig/backend-api`. We will neeed this image later to be pulled in the Kubernetes.
 - Create and apply the secrets. This will create both secret and config map to be used to connect to our db:
     `kubectl apply -f k8s/secrets.yml`
 - Create postgres volume for our db:
