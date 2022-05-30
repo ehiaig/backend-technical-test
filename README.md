@@ -1,14 +1,10 @@
-## Backend Engineer - Technical Test
-
 **Updates: Check the APP_README.md for how to run my solution.
 ![example workflow](https://github.com/ehiaig/backend-technical-test/actions/workflows/backend.yml/badge.svg)
 
 
-
-
 ### Introduction
 
-Your goal in this task is to implement a simple back-end service for managing the blood glucose readings of diabetes patients. The service associates readings with patients using UUIDs - there is no personally-identifiable information (PII) stored in the service.
+Implement a simple back-end service for managing the blood glucose readings of diabetes patients. The service associates readings with patients using UUIDs - there is no personally-identifiable information (PII) stored in the service.
 
 Here is a sample of some blood glucose readings (from a particular patient) that can be stored in the service.
 
@@ -18,7 +14,7 @@ Here is a sample of some blood glucose readings (from a particular patient) that
 | 70da0f35-317c-4a1a-a549-2f8e786b7cef | 22c685ae-9249-4c84-9b6e-d0e3537be66e | 7.2   | mmol/L | 2021-01-01T12:30:00+00:00 |
 | 8a041e90-6c11-4b21-b345-cddbd57b8a1b | 22c685ae-9249-4c84-9b6e-d0e3537be66e | 5.1   | mmol/L | 2021-01-01T16:45:00+00:00 |
 
-Your task is to create a RESTful API to implement CRUD operations on this data. You should provide five endpoints:
+The API endpoint contained in this APP are as follows:
 
 - GET /v1/reading - Get all readings
 - POST /v1/reading - Create a new reading from a JSON body
